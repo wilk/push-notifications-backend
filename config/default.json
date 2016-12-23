@@ -1,5 +1,10 @@
 {
   "host": "your_local_ip",
   "port": 3001,
-  "senderID": "your_sender_id"
+  "senderID": "your_sender_id",
+  "notification": {
+    "host": "localhost",
+    "port": 8088,
+    "interval": 5000
+  }
 }

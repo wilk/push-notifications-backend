@@ -6,8 +6,7 @@ const express = require('express'),
     logger = bunyan.createLogger({name: 'reg-be'}),
     config = require('config'),
     Sentencer = require('sentencer'),
-    request = require('request'),
-    PUSH_NOTIFICATION_INTERVAL = 5000
+    request = require('request')
 
 let tokens = []
 
@@ -27,13 +26,13 @@ setInterval(() => {
     }
 
     console.log('PUSH NOTIFICATION PAYLOAD', payload)
-    request.post('http://localhost:8088/api/push', {body: payload, json: true}, function (err, res, data) {
+    request.post(`http://${config.notification.host}:${config.notification.port}/api/push`, {body: payload, json: true}, function (err, res, data) {
         if (err) return console.error(err)
 
         if (res.statusCode === 200) console.log('PUSH NOTIFICATION SENT')
         else console.log('CANNOT SEND PUSH NOTIFICATION', res.statusCode)
     })
-}, PUSH_NOTIFICATION_INTERVAL)
+}, config.notification.interval)
 
 app.use(bodyParser.json())
 app.use(cors())
